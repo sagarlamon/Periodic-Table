@@ -1,4 +1,4 @@
-# Interactive Periodic Table of Elements
+# Periodic Table of Elements
 
 A minimal, information-dense scientific visualizer and reference tool for all 118 chemical elements.
 
