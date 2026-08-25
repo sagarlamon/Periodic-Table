@@ -71,20 +71,28 @@
     </div>
   </header>
 
-  <!-- Integrated Category Filters Legend -->
+  <!-- Integrated Category Filters Legend & Inspection Live Readout Bar -->
   <nav class="category-legend" id="category-legend">
-    <span class="legend-title">Categories:</span>
-    <button class="legend-badge active" data-category="all"><span class="legend-dot" style="background:#cbd5e1;"></span> All Elements <span class="legend-count">(118)</span></button>
-    <button class="legend-badge" data-category="reactive-nonmetal"><span class="legend-dot" style="background:var(--cat-reactive-nonmetal);"></span> Reactive Nonmetals <span class="legend-count">(11)</span></button>
-    <button class="legend-badge" data-category="noble-gas"><span class="legend-dot" style="background:var(--cat-noble);"></span> Noble Gases <span class="legend-count">(7)</span></button>
-    <button class="legend-badge" data-category="alkali-metal"><span class="legend-dot" style="background:var(--cat-alkali);"></span> Alkali Metals <span class="legend-count">(6)</span></button>
-    <button class="legend-badge" data-category="alkaline-earth"><span class="legend-dot" style="background:var(--cat-alkaline);"></span> Alkaline Earth Metals <span class="legend-count">(6)</span></button>
-    <button class="legend-badge" data-category="metalloid"><span class="legend-dot" style="background:var(--cat-metalloid);"></span> Metalloids <span class="legend-count">(7)</span></button>
-    <button class="legend-badge" data-category="post-transition-metal"><span class="legend-dot" style="background:var(--cat-post-transition);"></span> Post-Transition Metals <span class="legend-count">(11)</span></button>
-    <button class="legend-badge" data-category="transition-metal"><span class="legend-dot" style="background:var(--cat-transition);"></span> Transition Metals <span class="legend-count">(38)</span></button>
-    <button class="legend-badge" data-category="lanthanide"><span class="legend-dot" style="background:var(--cat-lanthanide);"></span> Lanthanides <span class="legend-count">(15)</span></button>
-    <button class="legend-badge" data-category="actinide"><span class="legend-dot" style="background:var(--cat-actinide);"></span> Actinides <span class="legend-count">(15)</span></button>
-    <button class="legend-badge" data-category="unknown"><span class="legend-dot" style="background:var(--cat-unknown);"></span> Unknown / Synthetic <span class="legend-count">(2)</span></button>
+    <div class="legend-row">
+      <span class="legend-title">Categories:</span>
+      <button class="legend-badge active" data-category="all"><span class="legend-dot" style="background:#cbd5e1;"></span> All Elements <span class="legend-count">(118)</span></button>
+      <button class="legend-badge" data-category="reactive-nonmetal"><span class="legend-dot" style="background:var(--cat-reactive-nonmetal);"></span> Reactive Nonmetals <span class="legend-count">(11)</span></button>
+      <button class="legend-badge" data-category="noble-gas"><span class="legend-dot" style="background:var(--cat-noble);"></span> Noble Gases <span class="legend-count">(7)</span></button>
+      <button class="legend-badge" data-category="alkali-metal"><span class="legend-dot" style="background:var(--cat-alkali);"></span> Alkali Metals <span class="legend-count">(6)</span></button>
+      <button class="legend-badge" data-category="alkaline-earth"><span class="legend-dot" style="background:var(--cat-alkaline);"></span> Alkaline Earth Metals <span class="legend-count">(6)</span></button>
+      <button class="legend-badge" data-category="metalloid"><span class="legend-dot" style="background:var(--cat-metalloid);"></span> Metalloids <span class="legend-count">(7)</span></button>
+      <button class="legend-badge" data-category="post-transition-metal"><span class="legend-dot" style="background:var(--cat-post-transition);"></span> Post-Transition Metals <span class="legend-count">(11)</span></button>
+      <button class="legend-badge" data-category="transition-metal"><span class="legend-dot" style="background:var(--cat-transition);"></span> Transition Metals <span class="legend-count">(38)</span></button>
+      <button class="legend-badge" data-category="lanthanide"><span class="legend-dot" style="background:var(--cat-lanthanide);"></span> Lanthanides <span class="legend-count">(15)</span></button>
+      <button class="legend-badge" data-category="actinide"><span class="legend-dot" style="background:var(--cat-actinide);"></span> Actinides <span class="legend-count">(15)</span></button>
+      <button class="legend-badge" data-category="unknown"><span class="legend-dot" style="background:var(--cat-unknown);"></span> Unknown / Synthetic <span class="legend-count">(2)</span></button>
+    </div>
+    
+    <!-- Hover Information Live Preview Readout Bar -->
+    <div id="hover-readout-bar" class="hover-readout-bar">
+      <span class="readout-tag">INSPECT</span>
+      <span id="readout-content" class="readout-content">Hover over an element to inspect metadata preview. Click for datasheet details.</span>
+    </div>
   </nav>
 
   <!-- Main Grid Container -->

@@ -10,6 +10,8 @@ export class PeriodicGrid {
     this.activeHeatmap = null;
     this.selectedCompareSet = new Set();
     this.activeElementNumber = null;
+
+    this.readoutContent = document.getElementById('readout-content');
   }
 
   setTemperature(kelvin) {
@@ -84,10 +86,27 @@ export class PeriodicGrid {
     else if (this.activeHeatmap === 'melting_point_k') { min = 0; max = 3800; }
 
     const ratio = Math.max(0, Math.min(1, (val - min) / (max - min)));
-    // Hue gradient from 210 (muted dark blue) to 15 (warm reddish amber)
     const hue = 210 - (ratio * 195);
     const lightness = 20 + (ratio * 25);
     return `hsl(${hue}, 70%, ${lightness}%)`;
+  }
+
+  updateReadout(el) {
+    if (!this.readoutContent) {
+      this.readoutContent = document.getElementById('readout-content');
+    }
+    if (!this.readoutContent) return;
+
+    if (!el) {
+      this.readoutContent.innerHTML = 'Hover over an element to inspect metadata preview. Click for datasheet details.';
+      return;
+    }
+
+    const formattedCategory = el.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const massStr = typeof el.atomic_mass === 'number' ? `${el.atomic_mass.toFixed(3)} u` : el.atomic_mass;
+    const configStr = el.electron_configuration ? ` · ${el.electron_configuration}` : '';
+
+    this.readoutContent.innerHTML = `Z=${el.number} · <span class="highlight-symbol">${el.name} (${el.symbol})</span> · <span class="highlight-category">${formattedCategory}</span> · ${massStr}${configStr}`;
   }
 
   render() {
@@ -97,12 +116,11 @@ export class PeriodicGrid {
     const grid = document.createElement('div');
     grid.className = 'periodic-grid';
 
-    // 1. Render Group Headers (Columns 2-19 in Grid, representing IUPAC Groups 1-18)
+    // 1. Render Group Headers (Columns 2-19 in Grid)
     const groupBlocks = [
       "s", "s", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "p", "p", "p", "p", "p", "p"
     ];
 
-    // Blank top-left corner
     const topLeft = document.createElement('div');
     topLeft.style.gridColumn = 1;
     topLeft.style.gridRow = 1;
@@ -117,7 +135,7 @@ export class PeriodicGrid {
       grid.appendChild(gh);
     }
 
-    // 2. Render Period Headers (Rows 2-8 in Grid, representing Periods 1-7)
+    // 2. Render Period Headers (Rows 2-8 in Grid)
     for (let p = 1; p <= 7; p++) {
       const ph = document.createElement('div');
       ph.className = 'period-header';
@@ -126,6 +144,9 @@ export class PeriodicGrid {
       ph.innerText = p;
       grid.appendChild(ph);
     }
+
+    // Map cards for fast class manipulation on hover
+    const cardMap = new Map();
 
     // 3. Render Elements (118 Elements Placement)
     this.elements.forEach(el => {
@@ -165,12 +186,14 @@ export class PeriodicGrid {
       card.className = `element-card cat-${el.category} state-${currentState} ${isDimmed ? 'dimmed' : ''} ${isSelectedCompare ? 'selected-compare' : ''} ${this.activeHeatmap ? 'heatmap-active' : ''}`;
       card.style.gridColumn = gridCol;
       card.style.gridRow = gridRow;
+      card.setAttribute('tabindex', '0'); // Accessibility Keyboard Focus
+      card.dataset.category = el.category;
+      card.dataset.number = el.number;
 
       if (heatmapColor) {
         card.style.setProperty('--heatmap-bg', heatmapColor);
       }
 
-      // State Short Code
       let stateShort = 'S';
       if (currentState === 'liquid') stateShort = 'L';
       if (currentState === 'gas') stateShort = 'G';
@@ -192,9 +215,50 @@ export class PeriodicGrid {
         </div>
       `;
 
+      cardMap.set(el.number, card);
+
+      // Hover / Focus Inspection Interactions
+      const handleEnter = () => {
+        grid.classList.add('is-hovering');
+        card.classList.add('hover-target');
+        this.updateReadout(el);
+
+        // Highlight neighborhood elements of the same category
+        cardMap.forEach((otherCard, otherNum) => {
+          if (otherCard.dataset.category === el.category) {
+            otherCard.classList.add('hover-same-category');
+          }
+        });
+      };
+
+      const handleLeave = () => {
+        grid.classList.remove('is-hovering');
+        card.classList.remove('hover-target');
+        this.updateReadout(null);
+
+        cardMap.forEach((otherCard) => {
+          otherCard.classList.remove('hover-same-category');
+        });
+      };
+
+      card.addEventListener('mouseenter', handleEnter);
+      card.addEventListener('mouseleave', handleLeave);
+      card.addEventListener('focus', handleEnter);
+      card.addEventListener('blur', handleLeave);
+
+      // Click / Keydown Activation
       card.addEventListener('click', () => {
         if (this.onElementClick) {
           this.onElementClick(el);
+        }
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (this.onElementClick) {
+            this.onElementClick(el);
+          }
         }
       });
 

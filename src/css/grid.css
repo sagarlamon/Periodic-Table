@@ -69,7 +69,7 @@
   color: var(--text-dim);
 }
 
-/* Element Cell Design */
+/* Element Cell Design & Refined Motion Hierarchy */
 .element-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -80,12 +80,18 @@
   justify-content: space-between;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.12s ease, border-color 0.12s ease;
   user-select: none;
   overflow: hidden;
+  outline: none;
+  /* Sub-160ms ease-out exit transition */
+  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 140ms ease-out,
+              border-color 140ms ease-out,
+              opacity 140ms ease-out,
+              box-shadow 140ms ease-out;
 }
 
-/* Category Accent Indicator (Subtle top strip) */
+/* Subtle Top Category Accent Line */
 .element-card::before {
   content: '';
   position: absolute;
@@ -94,27 +100,72 @@
   right: 0;
   height: 2px;
   background-color: var(--cat-color, var(--text-dim));
-  opacity: 0.85;
+  opacity: 0.75;
+  transition: opacity 140ms ease-out, height 140ms ease-out;
 }
 
-.element-card:hover {
+/* Element Hover State: Restrained 1.5px Translate, High Contrast Border/Background */
+.element-card:hover,
+.element-card.hover-target {
+  transform: translateY(-1.5px);
   background: var(--bg-card-hover);
-  border-color: var(--border-color-strong);
-  z-index: 10;
+  border-color: var(--cat-color, var(--border-color-strong));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+  opacity: 1 !important;
 }
 
+.element-card:hover::before,
+.element-card.hover-target::before {
+  opacity: 1;
+  height: 2.5px;
+}
+
+.element-card:hover .card-symbol,
+.element-card.hover-target .card-symbol {
+  color: #ffffff;
+}
+
+.element-card:hover .card-name,
+.element-card.hover-target .card-name {
+  color: var(--text-main);
+}
+
+/* Keyboard Focus Accessibility State */
+.element-card:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 1px;
+  transform: translateY(-1.5px);
+  background: var(--bg-card-hover);
+  z-index: 25;
+}
+
+/* Focus Neighborhood: Hovering an element creates subtle 85% opacity across unrelated elements */
+.periodic-grid.is-hovering .element-card {
+  opacity: 0.82;
+}
+
+.periodic-grid.is-hovering .element-card.hover-same-category {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Selected State (Persistent vs Temporary Hover) */
 .element-card.active-selected {
-  border: 1px solid var(--accent-blue);
+  border: 1.5px solid var(--accent-blue);
   background: var(--bg-card-active);
-}
-
-.element-card.dimmed {
-  opacity: 0.22;
-  filter: grayscale(0.85);
+  z-index: 15;
 }
 
 .element-card.selected-compare {
   border: 1.5px solid var(--accent-amber);
+  z-index: 15;
+}
+
+/* Filter Dimming */
+.element-card.dimmed {
+  opacity: 0.22 !important;
+  filter: grayscale(0.85);
 }
 
 /* Cell Internal Typographic Grammar */
@@ -157,6 +208,7 @@
   font-weight: 600;
   color: var(--text-main);
   line-height: 1.1;
+  transition: color 140ms ease-out;
 }
 
 .card-name {
@@ -167,6 +219,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 1px;
+  transition: color 140ms ease-out;
 }
 
 .card-bottom {
@@ -194,6 +247,18 @@
 .element-card.heatmap-active .card-mass,
 .element-card.heatmap-active .card-number {
   color: rgba(255, 255, 255, 0.85);
+}
+
+/* Accessibility: prefers-reduced-motion removes all translate motion and uses instant contrast */
+@media (prefers-reduced-motion: reduce) {
+  .element-card,
+  .element-card:hover,
+  .element-card.hover-target,
+  .element-card:focus-visible {
+    transform: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
 }
 
 /* Responsive Scaling */

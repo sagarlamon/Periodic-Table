@@ -78,7 +78,6 @@ body {
   text-align: center;
 }
 
-/* Auto-trigger rotation prompt when device is holding mobile portrait mode */
 @media (max-width: 900px) and (orientation: portrait) {
   .landscape-prompt-overlay {
     display: flex;
@@ -330,16 +329,22 @@ body {
   color: #ffffff;
 }
 
-/* Integrated Category Legend Bar */
+/* Integrated Category Filters Legend & Live Inspection Readout Bar */
 .category-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.55rem 1.25rem;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  -webkit-overflow-scrolling: touch;
+}
+
+.legend-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.3rem 0.4rem;
-  padding: 0.45rem 1.25rem;
-  background: var(--bg-panel);
-  border-bottom: 1px solid var(--border-color);
-  -webkit-overflow-scrolling: touch;
 }
 
 .legend-title {
@@ -391,6 +396,50 @@ body {
   font-size: 0.65rem;
   font-variant-numeric: tabular-nums;
   color: var(--text-dim);
+}
+
+/* Inspection Live Hover Readout Bar */
+.hover-readout-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+  min-height: 28px;
+}
+
+.readout-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 1px 5px;
+  border-radius: 2px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  letter-spacing: 0.5px;
+}
+
+.readout-content {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.readout-content .highlight-symbol {
+  color: var(--text-main);
+  font-weight: 600;
+  font-family: var(--font-ui);
+}
+
+.readout-content .highlight-category {
+  color: var(--accent-cyan);
 }
 
 /* Application Footer */
