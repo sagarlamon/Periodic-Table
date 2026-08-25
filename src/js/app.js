@@ -10,6 +10,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalOverlay = document.getElementById('element-modal-overlay');
   const compareContainer = document.getElementById('compare-drawer-container');
   const stateSummaryText = document.getElementById('state-summary-text');
+  const landscapePrompt = document.getElementById('landscape-prompt');
+  const dismissPromptBtn = document.getElementById('dismiss-prompt-btn');
+
+  // Attempt screen orientation lock to landscape on supported devices
+  function tryLockLandscape() {
+    if (window.screen && window.screen.orientation && typeof window.screen.orientation.lock === 'function') {
+      window.screen.orientation.lock('landscape').catch(() => {
+        // Ignored if user hasn't interacted or if orientation lock isn't supported by platform
+      });
+    }
+  }
+
+  // Dismiss landscape rotation prompt on mobile
+  if (dismissPromptBtn && landscapePrompt) {
+    dismissPromptBtn.addEventListener('click', () => {
+      landscapePrompt.style.display = 'none';
+      tryLockLandscape();
+    });
+  }
+
+  // Auto lock landscape on first touch interaction
+  document.addEventListener('touchstart', () => {
+    tryLockLandscape();
+  }, { once: true });
 
   // Compare Drawer Component
   const compareDrawer = new CompareDrawer(compareContainer, (numberToRemove) => {
