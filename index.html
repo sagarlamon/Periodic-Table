@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Periodic Table of Elements | Scientific Chemical Reference</title>
+  <meta name="description" content="Scientific reference chart of all 118 chemical elements with real-time thermal phase simulation, atomic electron shell visualization, and quantitative property heatmaps.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/main.css">
+  <link rel="stylesheet" href="/src/css/grid.css">
+  <link rel="stylesheet" href="/src/css/modal.css">
+</head>
+<body>
+  <!-- Header Control Bar -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-text">
+        <h1>Periodic Table of Elements</h1>
+        <p>Chemical & Atomic Reference</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Search Input -->
+      <div class="search-box">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="search-input" placeholder="Search symbol, name, or Z (e.g. Fe, 26, Iron)..." autocomplete="off" spellcheck="false">
+        <span class="search-shortcut">/</span>
+      </div>
+
+      <!-- Live Temperature Thermal Slider -->
+      <div class="thermal-control">
+        <span class="thermal-icon" title="Temperature">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+        </span>
+        <label for="thermal-slider">Temp:</label>
+        <input type="range" id="thermal-slider" class="thermal-slider" min="0" max="6000" step="5" value="298">
+        <span id="temp-badge" class="temp-badge">298 K (25°C / 77°F)</span>
+      </div>
+
+      <!-- State Summary -->
+      <div class="state-summary-badge" id="state-summary-badge">
+        <span id="state-summary-text">81 Solid · 11 Gas · 2 Liquid · 24 Synthetic</span>
+      </div>
+
+      <!-- Trend Heatmap Select -->
+      <select id="heatmap-select" class="instrument-select">
+        <option value="">Category View</option>
+        <option value="electronegativity">Electronegativity (Pauling)</option>
+        <option value="density">Density (g/cm³)</option>
+        <option value="ionization_energy">Ionization Energy (kJ/mol)</option>
+        <option value="melting_point_k">Melting Point (K)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Integrated Category Filters Legend -->
+  <nav class="category-legend" id="category-legend">
+    <span class="legend-title">Categories:</span>
+    <button class="legend-badge active" data-category="all"><span class="legend-dot" style="background:#cbd5e1;"></span> All Elements <span class="legend-count">(118)</span></button>
+    <button class="legend-badge" data-category="reactive-nonmetal"><span class="legend-dot" style="background:var(--cat-reactive-nonmetal);"></span> Reactive Nonmetals <span class="legend-count">(11)</span></button>
+    <button class="legend-badge" data-category="noble-gas"><span class="legend-dot" style="background:var(--cat-noble);"></span> Noble Gases <span class="legend-count">(7)</span></button>
+    <button class="legend-badge" data-category="alkali-metal"><span class="legend-dot" style="background:var(--cat-alkali);"></span> Alkali Metals <span class="legend-count">(6)</span></button>
+    <button class="legend-badge" data-category="alkaline-earth"><span class="legend-dot" style="background:var(--cat-alkaline);"></span> Alkaline Earth Metals <span class="legend-count">(6)</span></button>
+    <button class="legend-badge" data-category="metalloid"><span class="legend-dot" style="background:var(--cat-metalloid);"></span> Metalloids <span class="legend-count">(7)</span></button>
+    <button class="legend-badge" data-category="post-transition-metal"><span class="legend-dot" style="background:var(--cat-post-transition);"></span> Post-Transition Metals <span class="legend-count">(11)</span></button>
+    <button class="legend-badge" data-category="transition-metal"><span class="legend-dot" style="background:var(--cat-transition);"></span> Transition Metals <span class="legend-count">(38)</span></button>
+    <button class="legend-badge" data-category="lanthanide"><span class="legend-dot" style="background:var(--cat-lanthanide);"></span> Lanthanides <span class="legend-count">(15)</span></button>
+    <button class="legend-badge" data-category="actinide"><span class="legend-dot" style="background:var(--cat-actinide);"></span> Actinides <span class="legend-count">(15)</span></button>
+    <button class="legend-badge" data-category="unknown"><span class="legend-dot" style="background:var(--cat-unknown);"></span> Unknown / Synthetic <span class="legend-count">(2)</span></button>
+  </nav>
+
+  <!-- Main Grid Container -->
+  <main class="table-wrapper">
+    <div id="grid-container"></div>
+  </main>
+
+  <!-- Application Footer -->
+  <footer class="app-footer">
+    <div class="footer-left">
+      <a href="https://github.com/sagarlamon/Periodic-Table" target="_blank" rel="noopener noreferrer" class="github-link">
+        <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub
+      </a>
+    </div>
+    <div class="footer-center">
+      <p>made with <span class="heart">❤️</span> by SAGAR</p>
+    </div>
+    <div class="footer-right"></div>
+  </footer>
+
+  <!-- Element Detail Modal Overlay -->
+  <div id="element-modal-overlay" class="modal-overlay"></div>
+
+  <!-- Multi-Element Comparison Drawer -->
+  <div id="compare-drawer-container"></div>
+
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>

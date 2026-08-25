@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600&display=swap');
+
+:root {
+  /* Font Family Definitions */
+  --font-ui: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'IBM Plex Serif', Georgia, serif;
+  --font-condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+
+  /* Scientific Base Palette */
+  --bg-dark: #0b0d12;
+  --bg-panel: #12151e;
+  --bg-card: #161a26;
+  --bg-card-hover: #1e2434;
+  --bg-card-active: #273046;
+  
+  --border-color: #212738;
+  --border-color-subtle: #181d29;
+  --border-color-strong: #333c56;
+
+  --text-main: #f1f5f9;       /* Primary contrast text */
+  --text-secondary: #cbd5e1;  /* High contrast secondary */
+  --text-muted: #94a3b8;      /* Readable supporting information */
+  --text-dim: #64748b;        /* Quiet metadata */
+
+  /* Restrained Category Colors */
+  --cat-alkali: #d97706;
+  --cat-alkaline: #ca8a04;
+  --cat-transition: #0284c7;
+  --cat-post-transition: #7c3aed;
+  --cat-metalloid: #0d9488;
+  --cat-reactive-nonmetal: #16a34a;
+  --cat-noble: #4f46e5;
+  --cat-lanthanide: #e11d48;
+  --cat-actinide: #ea580c;
+  --cat-unknown: #6b7280;
+
+  /* Instrument Accents */
+  --accent-blue: #38bdf8;
+  --accent-cyan: #2dd4bf;
+  --accent-amber: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  min-height: 100vh;
+  overflow-x: auto;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App Header Layout */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 13, 18, 0.96);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.55rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-text h1 {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.1px;
+  line-height: 1.2;
+}
+
+.brand-text p {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* Header Controls Bar */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* Search Instrument Box */
+.search-box {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-box input {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 0.4rem 1.8rem 0.4rem 2rem;
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  transition: border-color 0.15s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  background: var(--bg-card);
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.search-box .search-shortcut {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1px 4px;
+  border-radius: 2px;
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+/* Thermal Slider Instrument */
+.thermal-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-panel);
+  padding: 0.3rem 0.65rem;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+}
+
+.thermal-icon {
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+}
+
+.thermal-control label {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.thermal-slider {
+  appearance: none;
+  width: 100px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border-color-strong);
+  outline: none;
+}
+
+.thermal-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  cursor: pointer;
+  border: 1.5px solid var(--bg-dark);
+}
+
+.temp-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-blue);
+  min-width: 135px;
+  white-space: nowrap;
+}
+
+.state-summary-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+}
+
+/* Control Select & Buttons */
+.instrument-select {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.4rem 0.65rem;
+  border-radius: 3px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.instrument-select:focus, .instrument-select:hover {
+  border-color: var(--border-color-strong);
+}
+
+.btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.4rem 0.75rem;
+  border-radius: 3px;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-color-strong);
+}
+
+.btn-primary {
+  background: var(--accent-blue);
+  color: #0f172a;
+  border: 1px solid var(--accent-blue);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #0284c7;
+  border-color: #0284c7;
+  color: #ffffff;
+}
+
+/* Integrated Category Legend Bar */
+.category-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.4rem;
+  padding: 0.45rem 1.25rem;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.legend-title {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin-right: 0.35rem;
+}
+
+.legend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 0.73rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 3px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.legend-badge:hover {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.legend-badge.active {
+  background: var(--bg-card-hover);
+  color: var(--text-main);
+  border-color: var(--border-color-strong);
+  font-weight: 500;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-count {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+/* Application Footer */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--border-color-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  background: var(--bg-dark);
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  transition: color 0.15s ease;
+}
+
+.github-link:hover {
+  color: var(--accent-blue);
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-center .heart {
+  color: #ef4444;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.footer-right {
+  min-width: 80px;
+}
+
+/* Category Specific Variables */
+.cat-alkali-metal { --cat-color: var(--cat-alkali); }
+.cat-alkaline-earth { --cat-color: var(--cat-alkaline); }
+.cat-transition-metal { --cat-color: var(--cat-transition); }
+.cat-post-transition-metal { --cat-color: var(--cat-post-transition); }
+.cat-metalloid { --cat-color: var(--cat-metalloid); }
+.cat-reactive-nonmetal { --cat-color: var(--cat-reactive-nonmetal); }
+.cat-noble-gas { --cat-color: var(--cat-noble); }
+.cat-lanthanide { --cat-color: var(--cat-lanthanide); }
+.cat-actinide { --cat-color: var(--cat-actinide); }
+.cat-unknown { --cat-color: var(--cat-unknown); }

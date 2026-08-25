@@ -1,0 +1,21 @@
+{
+  "name": "interactive-periodic-table",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "puppeteer-core": "^25.8.0",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "lucide": "^0.344.0"
+  }
+}
