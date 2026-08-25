@@ -2,16 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Periodic Table of Elements | Scientific Chemical Reference</title>
   <meta name="description" content="Scientific reference chart of all 118 chemical elements with real-time thermal phase simulation, atomic electron shell visualization, and quantitative property heatmaps.">
+  <meta name="screen-orientation" content="landscape">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="./assets/index-DCeY4y1r.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BJ2BiIWc.css">
+  <script type="module" crossorigin src="./assets/index-DkxR8mck.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-F1KQmhKd.css">
 </head>
 <body>
+  <!-- Mobile Portrait Rotation Prompt Overlay -->
+  <div id="landscape-prompt" class="landscape-prompt-overlay">
+    <div class="landscape-prompt-card">
+      <div class="rotate-icon-anim">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="12" height="18" x="6" y="3" rx="2" ry="2"/><path d="M12 17h.01"/><path d="M19 9l3 3-3 3"/></svg>
+      </div>
+      <h2>Rotate to Landscape Mode</h2>
+      <p>Hold your mobile device horizontally for optimal periodic table view.</p>
+      <button id="dismiss-prompt-btn" class="btn btn-primary" style="margin-top:0.85rem;">Continue Anyway</button>
+    </div>
+  </div>
+
   <!-- Header Control Bar -->
   <header class="app-header">
     <div class="brand">
